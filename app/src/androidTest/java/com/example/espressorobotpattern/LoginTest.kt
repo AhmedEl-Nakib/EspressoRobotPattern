@@ -22,7 +22,10 @@ import org.junit.runner.RunWith
 @RunWith(AndroidJUnit4::class)
 class LoginTest {
 
-    lateinit var robot : LoginRobot
+//    lateinit var robot : LoginRobot
+
+    private fun login(func: LoginRobot.() -> Unit) = LoginRobot()
+        .apply { func() }
 
     @Before
     fun testNavigationToInGameScreen() {
@@ -33,19 +36,28 @@ class LoginTest {
             navController.setGraph(R.navigation.nav_home)
             Navigation.setViewNavController(fragment.requireView(), navController)
         }
-        robot = LoginRobot()
+//        robot = LoginRobot()
     }
     @Test
     fun addEmailAddress(){
-        robot.addEmailAddress("ahmed.elnakib@gmail.com")
+//        robot.addEmailAddress("ahmed.elnakib@gmail.com")
+        login {
+            addEmailAddress("ahmed.elnakib@gmail.com")
+        }
     }
     @Test
     fun addPassword(){
-        robot.addPassword("123456")
+//        robot.addPassword("123456")
+        login {
+            addPassword("123456")
+        }
     }
     @Test
     fun clickOnLoginBtn(){
-        robot.clickOnLoginBtn("Dialog Title","yashour@ipmagix.com","12345")
+//        robot.clickOnLoginBtn("Dialog Title","yashour@ipmagix.com","12345")
+        login {
+            clickOnLoginBtn("Dialog Title","yashour@ipmagix.com","12345")
+        }
     }
 
 }
