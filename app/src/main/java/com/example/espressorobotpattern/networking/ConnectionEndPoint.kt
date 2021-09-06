@@ -10,7 +10,7 @@ import retrofit2.http.POST
 interface ConnectionEndPoint {
 
     @POST("user/login")
-    fun login(@Body loginRequestModel: LoginRequestModel) : Call<MagixResponse<LoginResponseModel>>
+    suspend fun login(@Body loginRequestModel: LoginRequestModel) : Call<MagixResponse<LoginResponseModel>>
 
 
 }

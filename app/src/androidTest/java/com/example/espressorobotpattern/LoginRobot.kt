@@ -11,6 +11,10 @@ import com.example.espressorobotpattern.login.LoginResponseModel
 import com.example.espressorobotpattern.magixResponse.MagixResponse
 import com.example.espressorobotpattern.networking.ApiClient
 import junit.framework.Assert.assertTrue
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.withContext
 import retrofit2.Call
 import retrofit2.Response
 import javax.security.auth.callback.Callback
@@ -37,9 +41,13 @@ class LoginRobot {
         Espresso.onView(withId(android.R.id.button1)).perform(click())
         Espresso.onView(withId(R.id.progressBar)).check(matches(isDisplayed()))
         try{
-            val response =  ApiClient.makeRetrofitService().login(LoginRequestModel(email,password)).execute()
-            val loginResponse = response.body()
-            assertTrue(response.isSuccessful && loginResponse!!.code!! == 200)
+            CoroutineScope(Dispatchers.IO).async {
+                val response =  ApiClient.makeRetrofitService().login(LoginRequestModel(email,password)).execute()
+                withContext(Dispatchers.Main){
+                    val loginResponse = response.body()
+                    assertTrue(response.isSuccessful && loginResponse!!.code!! == 200)
+                }
+            }
         }catch (e:Exception){
             Log.i("ErrorTest",e.message.toString())
         }
