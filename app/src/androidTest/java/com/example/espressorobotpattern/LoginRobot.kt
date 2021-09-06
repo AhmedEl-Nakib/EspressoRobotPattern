@@ -22,6 +22,8 @@ import javax.security.auth.callback.Callback
 
 class LoginRobot {
 
+    // https://medium.com/android-bits/espresso-robot-pattern-in-kotlin-fc820ce250f7
+
     fun addEmailAddress(email:String) : ViewInteraction? = Espresso.onView(withId(R.id.emailId))
         .perform(ViewActions.typeText(email), ViewActions.closeSoftKeyboard())
 
